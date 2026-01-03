@@ -1,6 +1,9 @@
+// api/telegram-webhook.ts
+
 export const config = {
   runtime: "nodejs18.x"
 };
+
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
@@ -14,7 +17,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const update = req.body as any;
+    const update = req.body;
 
     const message = update.message || update.callback_query?.message;
     if (!message) {
@@ -22,7 +25,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const chatId = message.chat.id;
-    const text: string = message.text || "";
+    const text = message.text || "";
 
     if (text.startsWith("/start")) {
       await sendStartMessage(chatId);
@@ -50,8 +53,7 @@ async function sendStartMessage(chatId: number) {
           }
         ]
       ],
-      resize_keyboard: true,
-      one_time_keyboard: false
+      resize_keyboard: true
     }
   };
 
