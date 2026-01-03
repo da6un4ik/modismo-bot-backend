@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "functions": {
+    "api/telegram-webhook.ts": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "builds": [
+    { "src": "api/telegram-webhook.ts", "use": "@vercel/node" }
+  ]
+}
